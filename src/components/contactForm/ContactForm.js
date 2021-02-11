@@ -6,6 +6,7 @@ import ContactFormWrapper from './ContactFormStyled';
 import Alert from '../alert/Alert';
 import { getContacts } from '../../redux/selectors/phonebookSelectors';
 import { operationAddContact } from '../../redux/operations/phonebookOperations';
+import { getLocalId } from '../../redux/selectors/authSelectors';
 
 const initialState = {
   name: '',
@@ -14,6 +15,7 @@ const initialState = {
 
 const ContactForm = () => {
   const contacts = useSelector(getContacts);
+  const localId = useSelector(getLocalId);
   const dispatch = useDispatch();
   const [state, setState] = useState({ ...initialState });
 
@@ -28,6 +30,7 @@ const ContactForm = () => {
   const onHandleSubmit = e => {
     e.preventDefault();
     const user = { name: state.name, number: state.number };
+
     if (contacts.some(elem => elem.name === user.name)) {
       showAlertMsg(`${user.name} is already in contacts`);
       return;
@@ -40,7 +43,7 @@ const ContactForm = () => {
       showAlertMsg('Pleas enter a number');
       return;
     }
-    dispatch(operationAddContact(user));
+    dispatch(operationAddContact(user, localId));
     setState({ ...initialState });
   };
 

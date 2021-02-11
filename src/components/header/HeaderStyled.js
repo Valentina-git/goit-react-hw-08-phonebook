@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const HeaderStyled = styled.header`
   top: 0;
@@ -6,7 +7,7 @@ const HeaderStyled = styled.header`
   position: sticky;
   z-index: 1100;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 64px;
   padding-right: 24px;
@@ -18,15 +19,17 @@ const HeaderStyled = styled.header`
   background-color: #3f51b5;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+`;
 
-  .navlink {
-    text-decoration: none;
-    padding: 10px;
-    font-size: 20px;
-    color: lightgrey;
-  }
-  .navlink-active {
+export default HeaderStyled;
+
+export const NavElem = styled(NavLink)`
+  text-decoration: none;
+  padding: 10px;
+  font-size: 20px;
+  color: lightgrey;
+
+  &.${props => props.activeClassName} {
     color: white;
   }
 `;
-export default HeaderStyled;

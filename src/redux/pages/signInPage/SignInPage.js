@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { signInOperation } from '../../operations/authOperations';
 
 import SignInWrapper from './SignInStyled';
 
@@ -19,7 +20,7 @@ const SignInPage = () => {
 
   const onHandleSubmit = e => {
     e.preventDefault();
-    // dispatch(signInOperation(state));
+    dispatch(signInOperation(state));
     setState({ ...initialState });
   };
 
@@ -34,7 +35,6 @@ const SignInPage = () => {
           <input
             className="formInput"
             type="text"
-            autoComplete="off"
             autoFocus
             value={email}
             name="email"

@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import LogOutMenuStyled from './LogOutMenuStyled';
 import { getUserName } from '../../redux/selectors/authSelectors';
+import { logOutOperation } from '../../redux/operations/authOperations';
 
 const LogOutMenu = () => {
   const dispatch = useDispatch();
   const userName = useSelector(getUserName);
 
   const onLogOut = () => {
-    // dispatch(logOutOperation());
+    dispatch(logOutOperation());
   };
 
   return (

@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 import mainRoutes from '../../redux/routes/mainRoutes';
 import { isAuth } from '../../redux/selectors/authSelectors';
 import LogOutMenu from '../logOutMenu/LogOutMenu';
-import HeaderStyled from './HeaderStyled';
+import HeaderStyled, { NavElem } from './HeaderStyled';
 
 const Header = () => {
   const isAuthenticated = useSelector(isAuth);
@@ -16,7 +15,7 @@ const Header = () => {
         ? mainRoutes.map(
             route =>
               !route.restricted && (
-                <NavLink
+                <NavElem
                   className="navlink"
                   activeClassName="navlink-active"
                   to={route.path}
@@ -24,13 +23,13 @@ const Header = () => {
                   exact={route.exact}
                 >
                   {route.name}
-                </NavLink>
+                </NavElem>
               ),
           )
         : mainRoutes.map(
             route =>
               !route.private && (
-                <NavLink
+                <NavElem
                   className="navlink"
                   activeClassName="navlink-active"
                   to={route.path}
@@ -38,7 +37,7 @@ const Header = () => {
                   exact={route.exact}
                 >
                   {route.name}
-                </NavLink>
+                </NavElem>
               ),
           )}
       {isAuthenticated && <LogOutMenu />}

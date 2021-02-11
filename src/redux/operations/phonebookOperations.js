@@ -11,11 +11,25 @@ import {
   deleteContactError,
 } from '../actions/phonebookActions';
 
-export const operationAddContact = contact => async dispatch => {
+const token = {
+  set(token) {
+    axios.defaults.headers.common.Authorization = `${token}`;
+  },
+  unset() {
+    axios.defaults.headers.common.Authorization = '';
+  },
+};
+
+export const operationAddContact = contact => async (dispatch, getState) => {
   dispatch(addContactRequest());
+
+  const {
+    auth: { token: persistToken, localId },
+  } = getState();
+
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/contacts.json`,
+      `${process.env.REACT_APP_BASE_URL}/contacts/${localId}.json?auth=${persistToken}`,
       contact,
     );
     dispatch(addContactSuccess({ ...contact, id: res.data.name }));
@@ -24,11 +38,19 @@ export const operationAddContact = contact => async dispatch => {
   }
 };
 
-export const operationGetContacts = () => async dispatch => {
+export const operationGetContacts = () => async (dispatch, getState) => {
   dispatch(getContactsRequest());
+
+  const {
+    auth: { token: persistToken, localId },
+  } = getState();
+
+  if (!persistToken) return;
+  token.set(persistToken);
+
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/contacts.json`,
+      `${process.env.REACT_APP_BASE_URL}/contacts/${localId}.json?auth=${persistToken}`,
     );
 
     if (res.data) {

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Header from './header/Header';
 import Main from './main/Main';
 import { isAuth } from '../redux/selectors/authSelectors';
+import { getUserOperation } from '../redux/operations/authOperations';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const App = () => {
   const history = useHistory();
 
   useEffect(() => {
-    // dispatch(getUserOperation());
+    dispatch(getUserOperation());
     // eslint-disable-next-line
   }, []);
 

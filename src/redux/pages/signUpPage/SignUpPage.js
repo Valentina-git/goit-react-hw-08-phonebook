@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { signUpOperation } from '../../operations/authOperations';
 
 import SignUpWrapper from './SignUpPageStyled';
 
 const initialState = {
-  name: '',
   email: '',
   password: '',
 };
@@ -20,29 +20,16 @@ const SignUpPage = () => {
 
   const onHandleSubmit = e => {
     e.preventDefault();
-    // dispatch(signUpOperation(state));
+    dispatch(signUpOperation(state));
     setState({ ...initialState });
   };
 
-  const { name, email, password } = state;
+  const { email, password } = state;
 
   return (
     <SignUpWrapper>
       <h2 className="pageTitle">Sign Up</h2>
       <form onSubmit={onHandleSubmit}>
-        <label className="formLabel">
-          Name:
-          <input
-            className="formInput"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            value={name}
-            name="name"
-            placeholder="Enter name"
-            onChange={onHandleChange}
-          />
-        </label>
         <label className="formLabel">
           Email:
           <input
