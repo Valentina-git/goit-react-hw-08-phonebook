@@ -66,10 +66,17 @@ export const operationGetContacts = () => async (dispatch, getState) => {
   }
 };
 
-export const operationDeleteContact = id => async dispatch => {
+export const operationDeleteContact = id => async (dispatch, getState) => {
   dispatch(deleteContactRequest());
+
+  const {
+    auth: { token: persistToken, localId },
+  } = getState();
+
   try {
-    await axios.delete(`${process.env.REACT_APP_BASE_URL}/contacts/${id}.json`);
+    await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/contacts/${localId}/${id}.json?auth=${persistToken}`,
+    );
     dispatch(deleteContactSuccess(id));
   } catch (error) {
     dispatch(deleteContactError(error));
